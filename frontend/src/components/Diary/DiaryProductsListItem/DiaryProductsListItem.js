@@ -1,12 +1,19 @@
+import styles from './DiaryProductsListItem.module.css';
+
 const DiaryProductsListItem = ({ product, onDelete }) => {
-  const { title, grams, calories } = product;
+  const { id, title, weight, kcal } = product;
 
   return (
-    <li>
-      <span>{title}</span>
-      <span>{grams} g</span>
-      <span>{calories} kcal</span>
-      <button type="button" onClick={() => onDelete(product._id)}>
+    <li className={styles.item}>
+      <span className={styles.title}>{title}</span>
+      <span className={styles.weight}>{weight} g</span>
+      <span className={styles.kcal}>{kcal} kcal</span>
+      <button
+        className={styles.deleteButton}
+        type="button"
+        onClick={() => onDelete(id)}
+        aria-label={`Delete ${title}`}
+      >
         ×
       </button>
     </li>
