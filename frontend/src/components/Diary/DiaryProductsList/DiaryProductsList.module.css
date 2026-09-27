@@ -1,0 +1,92 @@
+.wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.scrollContainer {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    padding-right: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    background: #ffffff;
+}
+
+.scrollContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.wrapper::after {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+    height: 42px;
+    pointer-events: none;
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0.85),
+            #ffffff);
+    content: '';
+}
+
+.list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.scrollbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 6;
+    width: 6px;
+    height: 100%;
+    background: #f0f1f3;
+}
+
+.scrollThumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    min-height: 24px;
+    background: #264061;
+    border-radius: 0;
+}
+
+@media screen and (min-width: 1280px) {
+    .wrapper {
+        width: calc(100% - 32px);
+    }
+
+    .scrollContainer {
+        height: 271px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+    .scrollContainer {
+        height: 300px;
+        padding-right: 24px;
+    }
+
+    .wrapper::after {
+        right: 24px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .scrollContainer {
+        height: 300px;
+        padding-right: 24px;
+    }
+
+    .wrapper::after {
+        right: 24px;
+    }
+}

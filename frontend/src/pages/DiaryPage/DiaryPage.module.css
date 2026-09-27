@@ -1,0 +1,238 @@
+.diaryPage {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+.diaryContent {
+    width: 100%;
+    padding: 147px 32px 80px;
+}
+
+.dateSection {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+}
+
+.dateSection h1 {
+    color: #212121;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 100%;
+    letter-spacing: 4%;
+}
+
+.desktopAddForm {
+    width: 100%;
+}
+
+.mobileAddButton {
+    display: none;
+}
+
+.summary {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #f0f1f3;
+}
+
+.summaryBackground {
+    position: absolute;
+    z-index: 0;
+    display: none;
+    pointer-events: none;
+}
+
+.summaryDesktopBackground {
+    top: 0;
+    right: 0;
+    left: auto;
+    bottom: auto;
+}
+
+.summaryTabletBackground {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    transform: none;
+}
+
+.summaryContent {
+    position: relative;
+    z-index: 1;
+    padding: 146px 48px 80px;
+}
+
+.summarySection+.summarySection {
+    margin-top: 64px;
+}
+
+.summarySection h2 {
+    margin-bottom: 28px;
+    color: #212121;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 100%;
+    letter-spacing: 4%;
+}
+
+.summaryList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.summaryRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #9b9faa;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: 4%;
+}
+
+.recommendedList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: #9b9faa;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: 4%;
+}
+
+.addModal {
+    display: none;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+    .diaryContent {
+        padding: 100px 32px 80px;
+    }
+
+    .summaryTabletBackground {
+        display: block;
+        width: 210px;
+        height: auto;
+        top: auto;
+        left: auto;
+        transform: none;
+    }
+
+    .summaryContent {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 48px;
+        padding: 48px 32px;
+    }
+
+    .summarySection+.summarySection {
+        margin-top: 0;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .diaryPage {
+        display: grid;
+        grid-template-columns: 60% 40%;
+        min-height: 100vh;
+    }
+
+    .diaryContent {
+        padding: 147px 32px 80px;
+    }
+
+    .summaryDesktopBackground {
+        display: block;
+        top: 120px;
+        left: 20px;
+    }
+
+    .summaryContent {
+        display: block;
+        padding: 146px 48px 80px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .diaryContent {
+        padding: 40px 20px 48px;
+    }
+
+    .dateSection {
+        margin-bottom: 28px;
+    }
+
+    .dateSection h1 {
+        font-size: 18px;
+    }
+
+    .desktopAddForm {
+        display: none;
+    }
+
+    .mobileAddButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        margin: 40px auto 0;
+        border-radius: 50%;
+        background-color: #fc842d;
+        color: #ffffff;
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 1;
+        box-shadow: 0 4px 10px rgba(252, 132, 45, 0.3);
+    }
+
+    .summaryBackground {
+        display: none;
+    }
+
+    .summaryContent {
+        padding: 48px 20px 60px;
+    }
+
+    .summarySection h2 {
+        font-size: 18px;
+    }
+
+    .summaryRow,
+    .recommendedList {
+        font-size: 14px;
+    }
+
+    .addModal {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+    }
+
+    .addModalContent {
+        width: 100%;
+        height: 100%;
+        padding: 40px;
+        background-color: #ffffff;
+    }
+
+    .modalBackButton {
+        display: block;
+        color: #212121;
+        font-size: 32px;
+        font-weight: 400;
+        line-height: 1;
+    }
+}
