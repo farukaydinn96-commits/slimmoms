@@ -1,0 +1,140 @@
+.header {
+  border-bottom: 2px solid #e0e0e0;
+  background-color: #ffffff;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.leftSide {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.rightSide {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 300;
+}
+.logoSlim {
+  color: #212121;
+}
+.logoMom {
+  color: #fc842d;
+  font-weight: 700;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  text-decoration: none;
+  color: #9b9faa;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.activeLink {
+  text-decoration: none;
+  color: #212121;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.userName {
+  font-weight: 700;
+  font-size: 14px;
+  color: #212121;
+}
+
+.divider {
+  width: 2px;
+  height: 32px;
+  background-color: #e0e0e0;
+}
+
+.logoutBtn {
+  background: none;
+  border: none;
+  color: #9b9faa;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.logoutBtn:hover {
+  color: #fc842d;
+}
+
+.hamburgerBtn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 20px;
+  padding: 0;
+}
+
+.bar {
+  width: 100%;
+  height: 2px;
+  background-color: #212121;
+  transition: all 0.3s ease;
+}
+
+.mobileMenu {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .navWrapperDesktop {
+    display: none;
+  }
+
+  .hamburgerBtn {
+    display: flex;
+  }
+
+  .mobileMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f1f3;
+    padding: 20px 0;
+    border-top: 2px solid #e0e0e0;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    z-index: 100;
+  }
+}

@@ -1,19 +1,36 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
-import App from "./App";
+import { configureStore } from "@reduxjs/toolkit";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+import { authReducer } from "./auth/authSlice";
+import { productReducer } from "./products/productsSlice";
 
-root.render(
-  <React.StrictMode>
-        
-    <Provider store={store}>
-            
-      <App />
-          
-    </Provider>
-      
-  </React.StrictMode>,
-);
+const authPersistConfig = {
+  key: "auth",
+  storage,
+  whitelist: ["accessToken", "refreshToken"],
+};
+
+export const store = configureStore({
+  reducer: {
+    auth: persistReducer(authPersistConfig, authReducer),
+    products: productReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
+
+export const persistor = persistStore(store);
