@@ -1,0 +1,91 @@
+.searchContainer {
+  width: 100%;
+  max-width: 500px;
+  margin: 20px auto;
+  font-family: "Verdana", sans-serif;
+}
+
+.searchForm {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 12px 15px;
+  border: none;
+  border-bottom: 2px solid #e0e0e0;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.searchInput:focus {
+  border-bottom: 2px solid #fc842d;
+}
+
+.searchButton {
+  background-color: #fc842d;
+  color: white;
+  border: none;
+  padding: 0 25px;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.searchButton:disabled {
+  background-color: #ffa566;
+  cursor: not-allowed;
+}
+
+.searchButton:hover:not(:disabled) {
+  background-color: #e06c18;
+}
+
+.resultsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.resultItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  background-color: white;
+}
+
+.resultItem:last-child {
+  border-bottom: none;
+}
+
+.productTitle {
+  font-weight: bold;
+  color: #212121;
+}
+
+.productDetails {
+  color: #9b9faa;
+  font-size: 14px;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.emptyMessage {
+  color: #9b9faa;
+  font-style: italic;
+  text-align: center;
+  margin-top: 20px;
+}

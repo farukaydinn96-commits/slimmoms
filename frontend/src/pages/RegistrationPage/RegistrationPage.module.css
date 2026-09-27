@@ -1,0 +1,125 @@
+.pageWrapper {
+  min-height: calc(100vh - 85px);
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.container {
+  padding: 40px 20px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 160px 32px;
+    margin: 0;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .pageWrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .container {
+    padding: 160px 16px 160px 115px;
+  }
+}
+
+.title {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fc842d;
+  margin-bottom: 60px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup {
+  margin-bottom: 40px;
+}
+
+.input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: #212121;
+  outline: none;
+  background-color: transparent;
+  transition: border-color 0.3s ease;
+}
+
+.input::placeholder {
+  color: #9b9faa;
+  font-weight: 700;
+}
+
+.input:focus {
+  border-bottom: 1px solid #fc842d;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 32px;
+  margin-top: 20px;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 768px) {
+  .buttonGroup {
+    flex-direction: row;
+  }
+}
+
+.registerBtn,
+.loginLinkBtn {
+  width: 182px;
+  height: 44px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.registerBtn {
+  background-color: #fc842d;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0px 4px 10px rgba(252, 132, 45, 0.5);
+}
+
+.registerBtn:hover {
+  transform: scale(1.05);
+}
+
+.loginLinkBtn {
+  background-color: #ffffff;
+  color: #fc842d;
+  border: 2px solid #fc842d;
+}
+
+.loginLinkBtn:hover {
+  background-color: #fc842d;
+  color: #ffffff;
+}

@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.name {
+  font-weight: 700;
+  font-size: 14px;
+  color: #212121;
+}
+
+.divider {
+  height: 32px;
+  width: 2px;
+  background-color: #e0e0e0;
+}
+
+.button {
+  border: none;
+  background: none;
+  font-weight: 700;
+  font-size: 14px;
+  color: #9b9faa;
+  cursor: pointer;
+  padding: 0;
+  transition: color 250ms ease-in-out;
+}
+
+.button:hover,
+.button:focus {
+  color: #212121;
+}
