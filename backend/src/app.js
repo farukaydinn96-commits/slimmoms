@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const productRoutes = require("./routes/productRoutes");
 const authRoutes = require("./routes/authRoutes");
+const calculatorRoutes = require("./routes/calculatorRoutes");
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(express.json());
 
 app.use("/api/products", productRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/calculator", calculatorRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Aradığınız sayfa/endpoint bulunamadı" });
