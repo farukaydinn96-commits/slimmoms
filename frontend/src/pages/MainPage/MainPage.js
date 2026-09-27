@@ -1,9 +1,18 @@
+import DailyCaloriesForm from '../../components/Calculator/DailyCaloriesForm/DailyCaloriesForm';
+import styles from './MainPage.module.css';
+
 const MainPage = () => {
-  return (
-    <div style={{ padding: "40px 20px", textAlign: "center" }}>
-      <h2>Ana Sayfa - Yapım Aşamasında</h2>
-    </div>
-  );
+    return (
+        <main className={styles.page}>
+            <section className={styles.calculator}>
+                <h1 className={styles.title}>
+                    Calculate your daily calorie intake right now
+                </h1>
+
+                <DailyCaloriesForm />
+            </section>
+        </main>
+    );
 };
 
 export default MainPage;

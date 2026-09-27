@@ -1,0 +1,256 @@
+.form {
+    width: 496px;
+    font-family: Verdana, sans-serif;
+}
+
+.fields {
+    display: grid;
+    grid-template-columns: 240px 240px;
+    column-gap: 16px;
+    row-gap: 28px;
+
+    width: 496px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    color: #9b9faa;
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 100%;
+    letter-spacing: 4%;
+}
+
+.field input {
+    width: 240px;
+    height: 24px;
+
+    padding: 0;
+
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    outline: none;
+
+    background-color: transparent;
+
+    color: #212121;
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+
+    box-sizing: border-box;
+
+    transition: border-color 200ms ease;
+}
+
+.field input:focus {
+    border-bottom-color: #fc842d;
+}
+
+.field input:focus-visible {
+    border-bottom-color: #fc842d;
+}
+
+/* BLOOD TYPE */
+
+.bloodType {
+    min-width: 0;
+
+    padding: 0;
+    margin: 0;
+
+    border: none;
+
+    color: #9b9faa;
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 100%;
+    letter-spacing: 4%;
+}
+
+.bloodType legend {
+    padding: 0;
+    margin: 0 0 10px;
+}
+
+.radioGroup {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.radioLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #9b9faa;
+
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+
+    cursor: pointer;
+}
+
+/* CUSTOM RADIO */
+
+.radioLabel input {
+    appearance: none;
+    -webkit-appearance: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 20px;
+    height: 20px;
+
+    flex-shrink: 0;
+
+    padding: 0;
+    margin: 0;
+
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+
+    background-color: #ffffff;
+
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.radioLabel input:checked {
+    border-color: #e0e0e0;
+}
+
+.radioLabel input:checked::after {
+    content: '';
+
+    width: 12px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background-color: #fc842d;
+}
+
+.radioLabel:has(input:checked) {
+    color: #fc842d;
+}
+
+/* ERROR */
+
+.error {
+    margin-top: 2px;
+
+    color: #ff001b;
+
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+/* BUTTON */
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 210px;
+    height: 43px;
+
+    margin: 55px 0 0 auto;
+    padding: 0;
+
+    border: none;
+    border-radius: 30px;
+
+    background-color: #fc842d;
+    color: #ffffff;
+
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17px;
+    letter-spacing: 0.56px;
+
+    cursor: pointer;
+    appearance: none;
+
+    box-shadow: 0 4px 10px rgba(252, 132, 45, 0.5);
+
+    transition: box-shadow 200ms ease;
+}
+
+.button:hover {
+    background-color: #fc842d;
+    box-shadow: 0 4px 10px rgba(252, 132, 45, 0.5);
+}
+
+.button:active {
+    box-shadow: 0 3px 8px rgba(252, 132, 45, 0.5);
+}
+
+/* TABLET */
+
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+    .fields {
+        grid-template-columns: 240px 240px;
+        column-gap: 16px;
+        row-gap: 24px;
+    }
+
+    .button {
+        margin: 40px 0 0 0;
+    }
+}
+@media screen and (max-width: 767px) {
+    .fields {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        row-gap: 22px;
+    }
+
+    /* Figma mobile order */
+    .field:nth-child(1) {
+        order: 1;
+    }
+
+    .field:nth-child(3) {
+        order: 2;
+    }
+
+    .field:nth-child(5) {
+        order: 3;
+    }
+
+    .field:nth-child(2) {
+        order: 4;
+    }
+
+    .bloodType {
+        order: 5;
+    }
+
+    .field input {
+        width: 100%;
+    }
+
+    .button {
+        width: 210px;
+        margin: 40px auto 0;}
+
+    .form {
+        width: 100%;
+    }
+}
