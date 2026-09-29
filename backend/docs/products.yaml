@@ -1,0 +1,36 @@
+tags:
+  name: Products
+  description: Product operations
+
+paths:
+  /api/products:
+    get:
+      summary: Get products by search query
+      tags: [Products]
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          required: true
+          description: Product name to search for (e.g., "app")
+      responses:
+        200:
+          description: Successfully retrieved the product list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    title:
+                      type: string
+                    weight:
+                      type: number
+                    calories:
+                      type: number
+        400:
+          description: Query parameter 'q' is required

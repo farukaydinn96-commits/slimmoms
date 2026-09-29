@@ -1,0 +1,57 @@
+tags:
+  name: Auth
+  description: User registration and login operations
+
+paths:
+  /api/auth/register:
+    post:
+      summary: Register a new user
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "John Doe"
+                email:
+                  type: string
+                  example: "john@example.com"
+                password:
+                  type: string
+                  example: "password123"
+      responses:
+        201:
+          description: Successful registration
+        400:
+          description: Missing or invalid data
+        409:
+          description: Email is already in use
+
+  /api/auth/login:
+    post:
+      summary: User login
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "john@example.com"
+                password:
+                  type: string
+                  example: "password123"
+      responses:
+        200:
+          description: Successful login, returns user data and a token
+        401:
+          description: Invalid email or password
