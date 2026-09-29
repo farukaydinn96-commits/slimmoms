@@ -1,28 +1,38 @@
 import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger.js';
 
 import authRouter from './routes/api/auth.js';
 import productsRouter from './routes/api/products.js';
-import dailyNutritionsRouter from './routes/api/dailyNutritions.js';
 import dailyIntakeRouter from './routes/api/dailyIntakeRoutes.js';
-
-import { swaggerDocs } from './swagger.js';
+import dailyNutritionsRouter from './routes/api/dailyNutritions.js';
 
 const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 
 app.use(logger(formatsLogger));
-app.use(cors());
+
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://slimmoms.vercel.app'
+  ],
+  credentials: true,
+}));
+
 app.use(express.json());
+app.use(express.static('public'));
 
-swaggerDocs(app);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/api/auth', authRouter);
+app.use('/api/users', authRouter);
 app.use('/api/products', productsRouter);
-app.use('/api/dailynutritions', dailyNutritionsRouter);
 app.use('/api/daily-intake', dailyIntakeRouter);
+app.use('/api/daily-nutritions', dailyNutritionsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });

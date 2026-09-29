@@ -1,5 +1,4 @@
 import swaggerJsdoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
 
 const options = {
   definition: {
@@ -15,7 +14,7 @@ const options = {
         description: 'Local Server',
       },
       {
-        url: 'YOUR_RENDER_OR_VERCEL_LINK_HERE', // Deploy linkini buraya ekleyeceksin
+        url: 'https://slimmoms-ibjd.onrender.com',
         description: 'Production Server',
       },
     ],
@@ -39,6 +38,4 @@ const options = {
 
 const swaggerSpec = swaggerJsdoc(options);
 
-export const swaggerDocs = app => {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-};
+export default swaggerSpec;
