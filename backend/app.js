@@ -15,14 +15,16 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 
 app.use(logger(formatsLogger));
 
-app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'https://slimmoms.vercel.app'
-  ],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'https://slimmoms.vercel.app',
+    ],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -31,8 +33,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/api/users', authRouter);
 app.use('/api/products', productsRouter);
-app.use('/api/daily-intake', dailyIntakeRouter);
-app.use('/api/daily-nutritions', dailyNutritionsRouter);
+app.use('/api/dailyintake', dailyIntakeRouter);
+app.use('/api/dailynutritions', dailyNutritionsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
