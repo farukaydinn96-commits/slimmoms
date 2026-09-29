@@ -1,43 +1,101 @@
-/* Ana kapsayıcı: Tüm sayfayı kaplar, arkaplan görselleri buraya gelecek */
+/* Ana Kapsayıcıyı İkiye Bölüyoruz */
 .pageWrapper {
-  min-height: calc(100vh - 85px);
   display: flex;
-  position: relative;
+  min-height: calc(100vh - 85px);
+  width: 100%;
+  background-color: #ffffff;
   overflow: hidden;
 }
 
-.container {
-  padding: 40px 20px;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
+/* Sol Taraf (Form) */
+.leftPanel {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 40px 20px;
+  z-index: 5;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 @media screen and (min-width: 768px) {
-  .container {
-    padding: 160px 32px;
+  .leftPanel {
+    padding: 0 40px;
+    align-items: flex-start;
+  }
+  .formContainer {
     margin: 0;
   }
 }
 
 @media screen and (min-width: 1280px) {
-  .pageWrapper {
-    max-width: 1280px;
-    margin: 0 auto;
-  }
-  .container {
-    padding: 160px 16px 160px 115px;
+  .leftPanel {
+    flex: 0 0 45%;
+    padding-left: 115px;
   }
 }
 
+/* Sağ Taraf (Resimler) */
+.rightPanel {
+  display: none;
+}
+
+@media screen and (min-width: 1280px) {
+  .rightPanel {
+    display: block;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .vectorBg {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: auto;
+    z-index: 1;
+  }
+
+  .banana {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    z-index: 2;
+  }
+
+  .strawberry {
+    position: absolute;
+    bottom: 40px;
+    right: 60px;
+    width: 250px;
+    z-index: 3;
+  }
+
+  /* YAPRAKLARIN YENİ BOYUTU VE KONUMU */
+  .leaves {
+    position: absolute;
+    top: -30px;
+    right: 0;
+    width: 750px;
+    height: auto;
+    z-index: 4;
+    pointer-events: none;
+  }
+}
+
+/* Form Elemanları Tasarımı */
 .title {
+  font-family: 'Verdana', sans-serif;
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
   color: #fc842d;
   margin-bottom: 60px;
 }
@@ -46,7 +104,6 @@
   display: flex;
   flex-direction: column;
 }
-
 .inputGroup {
   margin-bottom: 40px;
 }
@@ -54,22 +111,19 @@
 .input {
   width: 100%;
   border: none;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #ebebeb;
   padding: 10px 0;
+  font-family: 'Verdana', sans-serif;
   font-weight: 700;
   font-size: 14px;
-  letter-spacing: 0.04em;
-  color: #212121;
+  color: #333333;
   outline: none;
   background-color: transparent;
   transition: border-color 0.3s ease;
 }
-
 .input::placeholder {
   color: #9b9faa;
-  font-weight: 700;
 }
-
 .input:focus {
   border-bottom: 1px solid #fc842d;
 }
@@ -77,7 +131,6 @@
 .buttonGroup {
   display: flex;
   gap: 32px;
-  margin-top: 20px;
   flex-direction: column;
 }
 
@@ -94,13 +147,12 @@
   border-radius: 30px;
   font-weight: 700;
   font-size: 14px;
-  letter-spacing: 0.04em;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
   text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .loginBtn {
@@ -109,7 +161,6 @@
   border: none;
   box-shadow: 0px 4px 10px rgba(252, 132, 45, 0.5);
 }
-
 .loginBtn:hover {
   transform: scale(1.05);
 }
@@ -119,7 +170,6 @@
   color: #fc842d;
   border: 2px solid #fc842d;
 }
-
 .registerLinkBtn:hover {
   background-color: #fc842d;
   color: #ffffff;

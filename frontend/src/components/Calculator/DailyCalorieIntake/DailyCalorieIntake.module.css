@@ -1,65 +1,87 @@
 .container {
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
 }
 
 .title {
-    margin: 0 0 24px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #212121;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
 
-    color: #212121;
-    font-family: Arial, sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1.2;
+.calorieWrapper {
+  margin-bottom: 32px;
 }
 
 .calories {
-    margin: 0 0 30px;
+  font-size: 48px;
+  font-weight: 700;
+  color: #264061;
+  letter-spacing: 0.04em;
+}
 
-    color: #ff751d;
-    font-family: Arial, sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 1.2;
+.kcal {
+  font-size: 16px;
+  font-weight: 700;
+  color: #264061;
+}
+
+.divider {
+  width: 100%;
+  max-width: 330px;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin-bottom: 20px;
+}
+
+.notRecommended {
+  width: 100%;
+  max-width: 330px;
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+.listTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #212121;
+  margin-bottom: 20px;
+}
+
+.foodsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.foodsList li {
+  color: #9b9faa;
+  font-size: 14px;
+  letter-spacing: 0.04em;
 }
 
 .button {
-    min-width: 140px;
-    height: 40px;
-
-    padding: 0 24px;
-
-    border: none;
-    border-radius: 20px;
-
-    background-color: #ff751d;
-    color: #ffffff;
-
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        background-color 200ms ease,
-        transform 200ms ease;
+  background-color: #fc842d;
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  padding: 13px 50px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0px 4px 10px rgba(252, 132, 45, 0.5);
+  transition: background-color 0.3s ease;
+  letter-spacing: 0.04em;
 }
 
 .button:hover {
-    background-color: #e86616;
-    transform: translateY(-1px);
-}
-
-.button:active {
-    transform: translateY(0);
-}
-
-@media screen and (max-width: 767px) {
-    .title {
-        font-size: 22px;
-    }
-
-    .calories {
-        font-size: 28px;
-    }
+  background-color: #e07222;
 }

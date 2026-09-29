@@ -1,17 +1,9 @@
 const express = require('express');
-const authenticate = require('../middlewares/authMiddleware');
-const {
-  addDiaryProduct,
-  deleteDiaryProduct,
-  getDiaryByDate,
-} = require('../controllers/diaryController');
-
 const router = express.Router();
+const diaryController = require('../controllers/diaryController');
 
-router.use(authenticate);
-
-router.post('/add', addDiaryProduct);
-router.delete('/:id', deleteDiaryProduct);
-router.get('/:date', getDiaryByDate);
+router.get('/:date', diaryController.getDiaryByDate);
+router.post('/', diaryController.addProductToDiary);
+router.delete('/:id', diaryController.deleteProductFromDiary);
 
 module.exports = router;

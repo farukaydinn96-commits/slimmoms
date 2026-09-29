@@ -1,14 +1,26 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 export const searchProducts = createAsyncThunk(
-  "products/search",
+  'products/search',
   async (query, thunkAPI) => {
     try {
-      const { data } = await axios.get(`/products?search=${query}`);
+      const state = thunkAPI.getState();
+      const token = state.auth.accessToken || state.auth.token;
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.get(`/api/products?search=${query}`, config);
+
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.message);
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || 'Ürün aranırken bir hata oluştu.'
+      );
     }
-  },
+  }
 );

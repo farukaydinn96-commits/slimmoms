@@ -38,17 +38,13 @@ const DiaryAddProductForm = ({
     >
       <div className={styles.productField}>
         <ProductSearch onSelect={onSelectProduct} />
+        {/* Seçilen ürün bilgisi form düzenini bozmasın diye buraya alındı */}
+        {selectedProduct && (
+          <div className={styles.selectedProductText}>
+            {selectedProduct.title} ({selectedProduct.calories} kcal)
+          </div>
+        )}
       </div>
-
-      {selectedProduct && (
-        <div className={styles.selectedProduct}>
-          <span>{selectedProduct.title}</span>
-
-          <span>
-            {selectedProduct.calories} kcal / {selectedProduct.weight}g
-          </span>
-        </div>
-      )}
 
       <div className={styles.weightField}>
         <input

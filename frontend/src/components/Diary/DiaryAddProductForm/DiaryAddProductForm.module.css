@@ -1,132 +1,135 @@
+/* --- ANA FORM DÜZENİ --- */
 .form {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 96px 56px;
-    align-items: end;
-    column-gap: 24px;
-    width: 100%;
-    margin-bottom: 48px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 48px;
+  position: relative;
 }
 
-.productField,
+/* --- ÜRÜN ARAMA ALANI --- */
+.productField {
+  flex: 1; /* Kalan tüm boşluğu doldurur, Figma'daki uzun input görünümü */
+  position: relative;
+}
+
+/* ProductSearch bileşeninin içindeki inputu Figma'ya uyarlar */
+.productField :global(input),
+.productField input {
+  width: 100%;
+  height: 40px;
+  padding: 0 0 12px 0;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  outline: none;
+  background-color: transparent;
+  color: #212121;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+/* KRİTİK DÜZELTME: ProductSearch'ten gelen fazlalık "Ara" butonunu gizler */
+.productField :global(button),
+.productField button {
+  display: none !important;
+}
+
+/* --- GRAMAJ ALANI --- */
 .weightField {
-    width: 100%;
+  width: 105px; /* Figma'daki kısa gramaj inputu */
 }
 
-.productField input,
 .weightField input {
-    width: 100%;
-    height: 40px;
-    padding: 0 0 12px;
-    border: 0;
-    border-bottom: 1px solid #e0e0e0;
-    outline: none;
-    background-color: transparent;
-    color: #212121;
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 100%;
-    letter-spacing: 4%;
+  width: 100%;
+  height: 40px;
+  padding: 0 0 12px 0;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  outline: none;
+  background-color: transparent;
+  color: #212121;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: right; /* Gramaj rakamları sağa yaslı daha şık durur */
 }
 
+.productField :global(input)::placeholder,
 .productField input::placeholder,
 .weightField input::placeholder {
-    color: #9b9faa;
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 100%;
-    letter-spacing: 4%;
-    opacity: 1;
+  color: #9b9faa;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 1;
 }
 
+/* Seçilen Ürün Bildirimi */
+.selectedProductText {
+  position: absolute;
+  bottom: -22px;
+  left: 0;
+  font-size: 11px;
+  color: #fc842d;
+  font-weight: 700;
+}
+
+/* --- TURUNCU EKLEME (+) BUTONU --- */
 .addButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background-color: #fc842d;
-    color: #ffffff;
-    font-size: 30px;
-    font-weight: 400;
-    line-height: 1;
-    box-shadow: 0 4px 10px rgba(252, 132, 45, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #fc842d;
+  color: #ffffff;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(252, 132, 45, 0.5);
+  transition: background-color 0.3s ease;
+  flex-shrink: 0; /* Butonun ezilmesini engeller */
+  margin-bottom: 5px; /* Çizgiyle görsel hizalama */
 }
 
+.addButton:hover {
+  background-color: #e07222;
+}
+
+/* --- MOBİL MODAL GÖRÜNÜMÜ --- */
 .modalForm {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-top: 140px;
-    margin-bottom: 0;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 80px;
+  gap: 32px;
 }
 
 .modalForm .productField,
 .modalForm .weightField {
-    width: 100%;
+  width: 100%;
 }
 
-.modalForm .weightField {
-    margin-top: 56px;
-}
-
-.modalForm .productField input,
 .modalForm .weightField input {
-    height: 48px;
-    padding: 0 0 14px;
+  text-align: left; /* Mobilde gramaj sola yaslıdır */
 }
 
 .modalForm .addButton {
-    width: 100%;
-    height: 60px;
-    margin-top: 72px;
-    border-radius: 30px;
-    background-color: #fc842d;
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 100%;
-}
-
-@media screen and (max-width: 767px) {
-    .form {
-        grid-template-columns: minmax(0, 1fr) 76px 48px;
-        column-gap: 16px;
-        margin-bottom: 32px;
-    }
-
-    .productField input,
-    .weightField input {
-        font-size: 14px;
-    }
-
-    .addButton {
-        width: 48px;
-        height: 48px;
-        font-size: 26px;
-    }
-
-    .modalForm {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin-top: 140px;
-        margin-bottom: 0;
-    }
-
-    .modalForm .addButton {
-        width: 100%;
-        height: 60px;
-        margin-top: 72px;
-        border-radius: 30px;
-        font-size: 20px;
-    }
+  width: 100%;
+  height: 60px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 20px;
+  margin-bottom: 0;
 }
 
 @media screen and (min-width: 1280px) {
-    .form {
-        max-width: 560px;
-    }
+  .form {
+    max-width: 560px; /* Masaüstü genişlik sınırı */
+  }
 }

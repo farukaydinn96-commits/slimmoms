@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { register, login, logout, refreshUser } from './authOperations'; // refreshUser eklendi
+import { createSlice } from "@reduxjs/toolkit";
+import { register, login, logout } from "./authOperations";
 
 const initialState = {
   user: { name: null, email: null },
@@ -11,19 +11,18 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      // KAYIT OL
-      .addCase(register.pending, state => {
+
+      .addCase(register.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
-        // KRİTİK DÜZELTME: Backend'den 'token' veya 'accessToken' gelme ihtimaline karşı ikisi de kontrol ediliyor
-        state.accessToken = action.payload.token || action.payload.accessToken;
+        state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         state.isLoggedIn = true;
         state.error = null;
@@ -33,15 +32,13 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
-      // GİRİŞ YAP
-      .addCase(login.pending, state => {
+      .addCase(login.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
-        // KRİTİK DÜZELTME
-        state.accessToken = action.payload.token || action.payload.accessToken;
+        state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         state.isLoggedIn = true;
         state.error = null;
@@ -50,12 +47,11 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-
       // ÇIKIŞ YAP
-      .addCase(logout.pending, state => {
+      .addCase(logout.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(logout.fulfilled, state => {
+      .addCase(logout.fulfilled, (state) => {
         state.isLoading = false;
         state.user = { name: null, email: null };
         state.accessToken = null;
@@ -63,23 +59,8 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
         state.error = null;
       })
-      .addCase(logout.rejected, state => {
+      .addCase(logout.rejected, (state) => {
         state.isLoading = false;
-      })
-
-      // SAYFA YENİLEME (F5) - Uygulamanın seni unutmaması için eklendi
-      .addCase(refreshUser.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(refreshUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload; // Backend'in döndüğü güncel kullanıcı bilgisi
-        state.isLoggedIn = true;
-        state.error = null;
-      })
-      .addCase(refreshUser.rejected, state => {
-        state.isLoading = false;
-        state.isLoggedIn = false;
       });
   },
 });

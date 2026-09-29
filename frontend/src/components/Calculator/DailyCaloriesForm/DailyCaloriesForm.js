@@ -1,83 +1,135 @@
-import { useState } from 'react';
-import CalculatorCalorieForm from '../CalculatorCalorieForm/CalculatorCalorieForm';
-import Modal from '../Modal/Modal';
-import DailyCalorieIntake from '../DailyCalorieIntake/DailyCalorieIntake';
-import { calculateDailyCalories } from '../../../utils/calculations';
-import { validateCalculatorForm } from '../../../utils/validation';
+import React, { useState } from 'react';
+// Tasarımı bozan CSS hatasını düzelttik: Orijinal çalışan CSS dosyana tam yol verildi.
+import styles from '../CalculatorCalorieForm/CalculatorCalorieForm.module.css';
 
-const initialFormData = {
+const bloodTypes = [
+  { value: '1', label: '1' },
+  { value: '2', label: '2' },
+  { value: '3', label: '3' },
+  { value: '4', label: '4' },
+];
+
+const DailyCaloriesForm = ({ onSubmit }) => {
+  const [formData, setFormData] = useState({
     height: '',
     desiredWeight: '',
     age: '',
     bloodType: '',
     currentWeight: '',
-};
+  });
 
-const DailyCaloriesForm = () => {
-    const [formData, setFormData] = useState(initialFormData);
-    const [errors, setErrors] = useState({});
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [calories, setCalories] = useState(null);
+  const [errors, setErrors] = useState({});
 
-    const handleChange = event => {
-        const { name, value } = event.target;
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
 
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value,
-        }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
 
-        setErrors(prevErrors => ({
-            ...prevErrors,
-            [name]: '',
-        }));
-    };
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (onSubmit) {
+      onSubmit(formData);
+    }
+  };
 
-    const handleSubmit = event => {
-        event.preventDefault();
+  return (
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <div className={styles.fields}>
+        <label className={styles.field}>
+          <span>Height *</span>
+          <input
+            type="number"
+            name="height"
+            value={formData.height}
+            onChange={handleChange}
+            min="100"
+            max="250"
+            required
+          />
+          {errors.height && (
+            <span className={styles.error}>{errors.height}</span>
+          )}
+        </label>
 
-        const validation = validateCalculatorForm(formData);
+        <label className={styles.field}>
+          <span>Desired weight *</span>
+          <input
+            type="number"
+            name="desiredWeight"
+            value={formData.desiredWeight}
+            onChange={handleChange}
+            min="20"
+            max="300"
+            required
+          />
+          {errors.desiredWeight && (
+            <span className={styles.error}>{errors.desiredWeight}</span>
+          )}
+        </label>
 
-        setErrors(validation.errors);
+        <label className={styles.field}>
+          <span>Age *</span>
+          <input
+            type="number"
+            name="age"
+            value={formData.age}
+            onChange={handleChange}
+            min="18"
+            max="100"
+            required
+          />
+          {errors.age && <span className={styles.error}>{errors.age}</span>}
+        </label>
 
-        if (!validation.isValid) {
-            return;
-        }
+        <fieldset className={styles.bloodType}>
+          <legend>Blood type *</legend>
+          <div className={styles.radioGroup}>
+            {bloodTypes.map(type => (
+              <label key={type.value} className={styles.radioLabel}>
+                <input
+                  type="radio"
+                  name="bloodType"
+                  value={type.value}
+                  checked={formData.bloodType === type.value}
+                  onChange={handleChange}
+                  required
+                />
+                <span className={styles.checkmark}></span>
+                <span>{type.label}</span>
+              </label>
+            ))}
+          </div>
+          {errors.bloodType && (
+            <span className={styles.error}>{errors.bloodType}</span>
+          )}
+        </fieldset>
 
-        const calculatedCalories = calculateDailyCalories({
-            currentWeight: Number(formData.currentWeight),
-            height: Number(formData.height),
-            age: Number(formData.age),
-            desiredWeight: Number(formData.desiredWeight),
-        });
+        <label className={styles.field}>
+          <span>Current weight *</span>
+          <input
+            type="number"
+            name="currentWeight"
+            value={formData.currentWeight}
+            onChange={handleChange}
+            min="20"
+            max="300"
+            required
+          />
+          {errors.currentWeight && (
+            <span className={styles.error}>{errors.currentWeight}</span>
+          )}
+        </label>
+      </div>
 
-        setCalories(calculatedCalories);
-        setIsModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
-
-    return (
-        <>
-            <CalculatorCalorieForm
-                formData={formData}
-                errors={errors}
-                onChange={handleChange}
-                onSubmit={handleSubmit}
-            />
-
-            {isModalOpen && (
-                <Modal onClose={handleCloseModal}>
-                    <DailyCalorieIntake
-                        calories={calories}
-                        onClose={handleCloseModal}
-                    />
-                </Modal>
-            )}
-        </>
-    );
+      <button className={styles.button} type="submit">
+        Start losing weight
+      </button>
+    </form>
+  );
 };
 
 export default DailyCaloriesForm;

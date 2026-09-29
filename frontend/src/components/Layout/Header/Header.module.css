@@ -1,5 +1,5 @@
 .header {
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: none;
   background-color: #ffffff;
 }
 
@@ -15,7 +15,16 @@
 .leftSide {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 20px;
+}
+
+.navWrapperDesktop {
+  display: flex;
+  align-items: center;
+  border-left: 2px solid #e0e0e0; /* Gri dikey çizgi */
+  padding-left: 20px;
+  height: 32px;
+  margin-top: 12px; /* Menüyü ve çizgiyi aşağı, logonun metnine doğru iter. Gerekirse bu değeri 10px veya 14px yaparak milimetrik ayarlayabilirsin. */
 }
 
 .rightSide {

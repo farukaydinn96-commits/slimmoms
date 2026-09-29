@@ -1,169 +1,72 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-
-import CalculatorCalorieForm from '../../components/Calculator/CalculatorCalorieForm/CalculatorCalorieForm';
-import Modal from '../../components/Calculator/Modal/Modal';
-import DailyCalorieIntake from '../../components/Calculator/DailyCalorieIntake/DailyCalorieIntake';
-
-import { calculateCalories } from '../../redux/calculatorSlice';
-import { validateCalculatorForm } from '../../utils/validation';
-
-import banana from '../../assets/images/Banana.png';
-import golge from '../../assets/images/golge.png';
-import muz from '../../assets/images/muz-1.png';
-import strawberry from '../../assets/images/Strawberry-Big-PNG.png';
-import yaprak from '../../assets/images/yaprak.png';
-
+import React, { useState } from 'react';
+import DailyCaloriesForm from '../../components/Calculator/DailyCaloriesForm/DailyCaloriesForm';
 import styles from './CalculatorPage.module.css';
-console.log('CALCULATOR CSS:', styles);
-
-const initialFormData = {
-    height: '',
-    desiredWeight: '',
-    age: '',
-    bloodType: '',
-    currentWeight: '',
-};
 
 const CalculatorPage = () => {
-    const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [formData, setFormData] = useState(initialFormData);
-    const [errors, setErrors] = useState({});
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [calories, setCalories] = useState(null);
+  const handleFormSubmit = () => {
+    setIsModalOpen(true);
+  };
 
-    const handleChange = event => {
-        const { name, value } = event.target;
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value,
-        }));
+  return (
+    <div className={styles.pageWrapper}>
+      <div className={styles.leftSide}>
+        <h2 className={styles.title}>
+          Calculate your daily calorie intake right now
+        </h2>
+        <DailyCaloriesForm onSubmit={handleFormSubmit} />
+      </div>
 
-        setErrors(prevErrors => ({
-            ...prevErrors,
-            [name]: '',
-        }));
-    };
+      <div className={styles.rightSide}>
+        {/* Arka plan görselleri CSS ile buraya gelecek */}
+      </div>
 
-    const handleSubmit = async event => {
-        event.preventDefault();
+      {isModalOpen && (
+        <div className={styles.modalOverlay} onClick={closeModal}>
+          <div
+            className={styles.modalContent}
+            onClick={e => e.stopPropagation()}
+          >
+            <button className={styles.closeButton} onClick={closeModal}>
+              &#10005;
+            </button>
 
-        const validation = validateCalculatorForm(formData);
+            <h2 className={styles.modalTitle}>
+              Your recommended daily
+              <br />
+              calorie intake is
+            </h2>
 
-        setErrors(validation.errors);
+            <div className={styles.calorieResult}>
+              <span className={styles.calorieNumber}>2800</span>
+              <span className={styles.calorieUnit}>ккал</span>
+            </div>
 
-        if (!validation.isValid) {
-            return;
-        }
+            <hr className={styles.modalDivider} />
 
-        const calculatorData = {
-            height: Number(formData.height),
-            desiredWeight: Number(formData.desiredWeight),
-            age: Number(formData.age),
-            bloodType: Number(formData.bloodType),
-            currentWeight: Number(formData.currentWeight),
-        };
+            <div className={styles.badFoodsSection}>
+              <h4 className={styles.badFoodsTitle}>Foods you should not eat</h4>
+              <ol className={styles.badFoodsList}>
+                <li>Flour products</li>
+                <li>Milk</li>
+                <li>Red meat</li>
+                <li>Smoked meats</li>
+              </ol>
+            </div>
 
-        try {
-            const result = await dispatch(
-                calculateCalories(calculatorData)
-            ).unwrap();
-
-            const calculatedCalories =
-                result.dailyRate ?? result.dailyCalories ?? null;
-
-            setCalories(calculatedCalories);
-            setIsModalOpen(true);
-        } catch (error) {
-            console.error('Calculator error:', error);
-        }
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
-
-    return (
-        <main className={styles.page}>
-            {/* TABLET */}
-
-            <img
-                className={styles.tabletVector3}
-                src={muz}
-                alt=""
-            />
-
-            <img
-                className={styles.tabletStrawberry}
-                src={strawberry}
-                alt=""
-            />
-
-            <img
-                className={styles.tabletLeaves}
-                src={yaprak}
-                alt=""
-            />
-
-            <img
-                className={styles.tabletShadow}
-                src={golge}
-                alt=""
-            />
-
-            {/* DESKTOP */}
-
-            <img
-                className={styles.desktopLeaves}
-                src={yaprak}
-                alt=""
-            />
-
-            <img
-                className={styles.desktopStrawberry}
-                src={strawberry}
-                alt=""
-            />
-
-            <img
-                className={styles.desktopBanana}
-                src={banana}
-                alt=""
-            />
-
-            <img
-                className={styles.desktopShadow}
-                src={golge}
-                alt=""
-            />
-
-            <section className={styles.calculator}>
-                <div className={styles.content}>
-                    <h1 className={styles.title}>
-                        Calculate your daily calorie intake right now
-                    </h1>
-
-                    <CalculatorCalorieForm
-                        formData={formData}
-                        errors={errors}
-                        onChange={handleChange}
-                        onSubmit={handleSubmit}
-                    />
-                </div>
-            </section>
-
-            {isModalOpen && (
-                <Modal onClose={handleCloseModal}>
-                    <DailyCalorieIntake
-                        calories={calories}
-                        onClose={handleCloseModal}
-                    />
-                </Modal>
-            )}
-        </main>
-    );
+            <button className={styles.modalActionButton}>
+              Start losing weight
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default CalculatorPage;

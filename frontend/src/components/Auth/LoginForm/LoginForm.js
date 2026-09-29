@@ -1,100 +1,56 @@
-import React, { useEffect } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { login } from "../../../redux/auth/authOperations";
-import styles from "./LoginForm.module.css";
-
-const validationSchema = Yup.object({
-  email: Yup.string()
-    .email("Geçersiz e-posta adresi")
-    .required("E-posta alanı zorunludur"),
-  password: Yup.string()
-    .min(8, "Şifre en az 8 karakter olmalıdır")
-    .required("Şifre alanı zorunludur"),
-});
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { login } from '../../../redux/auth/authOperations';
+import styles from './LoginForm.module.css';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate("/calculator");
-    }
-  }, [isLoggedIn, navigate]);
-
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      dispatch(
-        login({
-          email: values.email,
-          password: values.password,
-        }),
-      );
-      resetForm();
-    },
-  });
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(login({ email, password }));
+  };
 
   return (
     <div className={styles.formContainer}>
-      <h2 className={styles.title}>Giriş Yap</h2>
-      <form onSubmit={formik.handleSubmit} className={styles.form}>
-        <div className={styles.inputGroup}>
-          <label htmlFor="email" className={styles.label}>
-            E-posta *
-          </label>
+      <h2 className={styles.title}>LOG IN</h2>
+
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.inputWrapper}>
           <input
-            id="email"
-            name="email"
             type="email"
-            className={`${styles.input} ${formik.touched.email && formik.errors.email ? styles.errorInput : ""}`}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
+            name="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="Email *"
+            required
+            className={styles.input}
           />
-          {formik.touched.email && formik.errors.email ? (
-            <div className={styles.errorText}>{formik.errors.email}</div>
-          ) : null}
         </div>
 
-        <div className={styles.inputGroup}>
-          <label htmlFor="password" className={styles.label}>
-            Şifre *
-          </label>
+        <div className={styles.inputWrapper}>
           <input
-            id="password"
-            name="password"
             type="password"
-            className={`${styles.input} ${formik.touched.password && formik.errors.password ? styles.errorInput : ""}`}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
+            name="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Password *"
+            required
+            className={styles.input}
           />
-          {formik.touched.password && formik.errors.password ? (
-            <div className={styles.errorText}>{formik.errors.password}</div>
-          ) : null}
         </div>
 
-        <div className={styles.buttonGroup}>
-          <button type="submit" className={styles.primaryButton}>
-            Giriş Yap
+        <div className={styles.buttonContainer}>
+          <button type="submit" className={styles.submitBtn}>
+            Log in
           </button>
-          <button
-            type="button"
-            className={styles.secondaryButton}
-            onClick={() => navigate("/registration")}
-          >
-            Kayıt Ol
-          </button>
+
+          <NavLink to="/register" className={styles.navBtn}>
+            Register
+          </NavLink>
         </div>
       </form>
     </div>

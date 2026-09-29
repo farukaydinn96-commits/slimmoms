@@ -1,12 +1,8 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styles from './Navigation.module.css';
 
-import styles from "../Header/Header.module.css";
-
-const Navigation = () => {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
+const Navigation = ({ isLoggedIn }) => {
   return (
     <nav className={styles.nav}>
       {isLoggedIn ? (
@@ -17,15 +13,16 @@ const Navigation = () => {
               isActive ? styles.activeLink : styles.link
             }
           >
-            GÜNLÜK
+            DIARY
           </NavLink>
+
           <NavLink
             to="/calculator"
             className={({ isActive }) =>
               isActive ? styles.activeLink : styles.link
             }
           >
-            HESAP MAKİNESİ
+            CALCULATOR
           </NavLink>
         </>
       ) : (
@@ -36,15 +33,16 @@ const Navigation = () => {
               isActive ? styles.activeLink : styles.link
             }
           >
-            GİRİŞ YAP
+            LOG IN
           </NavLink>
+
           <NavLink
             to="/register"
             className={({ isActive }) =>
               isActive ? styles.activeLink : styles.link
             }
           >
-            KAYIT OL
+            REGISTRATION
           </NavLink>
         </>
       )}

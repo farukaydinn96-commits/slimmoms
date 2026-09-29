@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import Logo from "../Logo/Logo";
-import Navigation from "../Navigation/Navigation";
-import UserInfo from "../UserInfo/UserInfo";
-import styles from "./Header.module.css";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import Logo from '../Logo/Logo';
+import Navigation from '../Navigation/Navigation';
+import UserInfo from '../UserInfo/UserInfo';
+import styles from './Header.module.css';
 
 const Header = () => {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -17,7 +17,8 @@ const Header = () => {
           <Logo />
           {/* Masaüstü ekranlarda görünen menü */}
           <div className={styles.navWrapperDesktop}>
-            <Navigation />
+            {/* isLoggedIn bilgisini Navigation'a gönderiyoruz */}
+            <Navigation isLoggedIn={isLoggedIn} />
           </div>
         </div>
 
@@ -40,7 +41,8 @@ const Header = () => {
       {/* Butona basıldığında açılan Mobil Menü */}
       {isMenuOpen && (
         <div className={styles.mobileMenu}>
-          <Navigation />
+          {/* isLoggedIn bilgisini buraya da ekliyoruz */}
+          <Navigation isLoggedIn={isLoggedIn} />
         </div>
       )}
     </header>

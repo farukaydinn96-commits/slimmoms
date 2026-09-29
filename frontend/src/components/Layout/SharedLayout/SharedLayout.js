@@ -1,15 +1,13 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
-// Eski çalışan yolları geri getirdik
-import Header from "../Header/Header";
-import RightSideBar from "../RightSideBar/RightSideBar";
-import Loader from "../Loader/Loader";
-import styles from "./SharedLayout.module.css";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import Header from '../Header/Header';
+import Loader from '../Loader/Loader';
+import styles from './SharedLayout.module.css';
 
 const SharedLayout = () => {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const isLoading = useSelector((state) => state.auth.isLoading);
+  const isLoading = useSelector(state => state.auth.isLoading);
 
   return (
     <>
@@ -19,10 +17,9 @@ const SharedLayout = () => {
 
       <div className={styles.layoutContainer}>
         <div className={styles.mainContent}>
+          {/* Outlet, içine girilen sayfaları (Calculator, Diary vb.) render eder */}
           <Outlet />
         </div>
-
-        {isLoggedIn && <RightSideBar />}
       </div>
     </>
   );

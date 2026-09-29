@@ -1,285 +1,220 @@
-.page {
+/* --- SAYFA DÜZENİ (LAYOUT) --- */
+
+.pageWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  overflow: hidden;
 }
 
-.page {
-    min-height: calc(100vh - 80px);
-    padding: 32px 20px;
-    margin: 0 auto;
-    box-sizing: border-box;
-    background-color: #ffffff;
-    overflow: hidden;
-}
-
-.content {
-    width: 100%;
+.leftSide {
+  flex: 1;
+  padding: 40px 20px 40px 0;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
 }
 
 .title {
-    margin: 0 0 34px;
-    color: #212121;
-    font-family: Verdana, sans-serif;
-    font-size: 18px;
-    line-height: 1.4;
-    font-weight: 700;
+  font-family: 'Verdana', sans-serif;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.4;
+  color: #212121;
+  margin-bottom: 34px;
 }
 
+.rightSide {
+  width: 55%;
+  position: relative;
 
-/* =========================
-   TABLET
-   768 - 1279
-========================= */
+  background-image:
+    url('../../assets/images/yaprak.png'),
+    url('../../assets/images/Strawberry-Big.png'),
+    url('../../assets/images/muz-1.png'), url('../../assets/images/golge.png');
 
-.tabletVector3,
-.tabletStrawberry,
-.tabletLeaves,
-.tabletShadow,
-.desktopLeaves,
-.desktopStrawberry,
-.desktopBanana,
-.desktopShadow {
-    display: none;
+  background-repeat: no-repeat;
+
+  /* Yaprak boyutu %60'a çıkarıldı ve tablet için responsive ayarı eklendi */
+  background-size: 60%, 35%, 60%, contain;
+
+  /* Yaprakların konumu formun bitimine (ortaya) doğru çekildi */
+  background-position:
+    top 35% left 0%,
+    bottom 10% right 15%,
+    top 0 right 0,
+    bottom right;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1279px) {
-    .page {
-        position: relative;
-        min-height: calc(100vh - 80px);
-        padding: 140px 32px;
-        box-sizing: border-box;
-        background-color: #ffffff;
-        overflow: hidden;
-    }
+/* --- MODAL (POPUP) TASARIMI --- */
 
-    /* MUZ - muz-1.png */
-
-    .tabletVector3 {
-        display: block;
-        position: absolute;
-
-        width: 740px;
-        height: 527px;
-
-        left: 277px;
-        top: 593px;
-
-        z-index: 3;
-        pointer-events: none;
-    }
-
-    /* ÇİLEK - Strawberry-Big-PNG.png */
-
-   .tabletStrawberry {
-    display: block;
-    position: absolute;
-
-    width: 208px;
-    height: 203px;
-
-    left: 464px;
-    top: 583px;
-
-    transform: rotate(-10deg);
-    transform-origin: center;
-
-    filter: drop-shadow(10px 20px 50px #0000004D);
-
-    z-index: 4;
-    pointer-events: none;
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(33, 33, 33, 0.12);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-    /* YAPRAK - yaprak.png */
-
-    .tabletLeaves {
-        display: block;
-        position: absolute;
-
-        width: 531px;
-        height: 602px;
-
-        left: -0px;
-        top: 493px;
-        right: 415px;
-
-        transform: rotate(-270deg);
-        transform-origin: center;
-
-        z-index: 2;
-        pointer-events: none;
-    }
-
-    /* GÖLGE - golge.png */
-
-    .tabletShadow {
-        display: block;
-        position: absolute;
-
-        width: 740px;
-        height: 527px;
-
-        left: 277px;
-        top: 593px;
-
-        z-index: 1;
-        pointer-events: none;
-    }
-
-    .content {
-        position: relative;
-        z-index: 10;
-        width: 100%;
-    }
-
-    .title {
-        width: 704px;
-        max-width: 100%;
-        margin: 0 0 68px;
-
-        font-size: 34px;
-        line-height: 1.4;
-    }
+.modalContent {
+  background-color: #ffffff;
+  width: 672px;
+  height: 574px;
+  padding: 64px 80px;
+  box-shadow: 0px 22px 40px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  font-family: 'Verdana', sans-serif;
 }
 
-
-/* =========================
-   DESKTOP
-   1280+
-========================= */
-
-@media screen and (min-width: 1280px) {
-    .page {
-        position: relative;
-        min-height: 100vh;
-        padding: 140px 16px;
-        box-sizing: border-box;
-        background-color: #ffffff;
-        overflow: hidden;
-    }
-
-    .content {
-        position: relative;
-        z-index: 10;
-
-        width: 600px;
-        padding-left: 16px;
-    }
-
-    .title {
-        width: 600px;
-        margin: 0 0 68px;
-
-        font-size: 34px;
-        line-height: 1.4;
-    }
-
-    /* YAPRAK - yaprak.png */
-
-    .desktopLeaves {
-        display: block;
-        position: absolute;
-
-        width: 746px;
-        height: 846px;
-
-        right: 205px;
-        top: -130px;
-
-
-
-        z-index: 1;
-        pointer-events: none;
-    }
-
-    /* ÇİLEK - Strawberry-Big-PNG.png */
-
-    .desktopStrawberry {
-        display: block;
-        position: absolute;
-
-        width: 325px;
-        height: auto;
-
-        right: 50px;
-        top: 440px;
-
-        z-index: 3;
-        pointer-events: none;
-    }
-
-    /* MUZ - Banana.png */
-
-    .desktopBanana {
-        display: block;
-        position: absolute;
-
-        width: 500px;
-        height: auto;
-
-        right: 0;
-        top: -10px;
-
-        z-index: 2;
-        pointer-events: none;
-    }
-
-    /* GÖLGE - golge.png */
-
-    .desktopShadow {
-        display: block;
-        position: absolute;
-
-        width: 602,01px;
-        height: 816px;
-
-        right: -10px;
-        bottom: 0;
-        left: 677,99px;
-
-   pointer-events: none;
-    }
-
-    .tabletVector3,
-    .tabletStrawberry,
-    .tabletLeaves,
-    .tabletShadow {
-        display: none;
-    }
+.closeButton {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #212121;
+  padding: 5px;
 }
 
+.modalTitle {
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.2;
+  text-align: center;
+  color: #212121;
+  margin-bottom: 20px;
+}
 
-/* =========================
-   MOBILE
-   0 - 767
-========================= */
+.calorieResult {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
 
-@media screen and (max-width: 767px) {
-    .page {
-        min-height: calc(100vh - 80px);
-        padding: 32px 20px;
-        background-color: #ffffff;
-        overflow: hidden;
-    }
+.calorieNumber {
+  font-weight: 700;
+  font-size: 48px;
+  color: #264061;
+  letter-spacing: 0.04em;
+}
 
-    .content {
-        width: 100%;
-    }
+.calorieUnit {
+  font-weight: 700;
+  font-size: 16px;
+  color: #264061;
+}
 
-    .title {
-        width: 280px;
-        max-width: 100%;
-        margin: 0 0 34px;
+.modalDivider {
+  width: 330px;
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin-bottom: 20px;
+}
 
-        font-size: 18px;
-        line-height: 1.4;
-    }
+.badFoodsSection {
+  text-align: left;
+  width: 330px;
+  margin-bottom: 40px;
+}
 
-    .tabletVector3,
-    .tabletStrawberry,
-    .tabletLeaves,
-    .tabletShadow,
-    .desktopLeaves,
-    .desktopStrawberry,
-    .desktopBanana,
-    .desktopShadow {
-        display: none;
-    }
+.badFoodsTitle {
+  font-weight: 700;
+  font-size: 14px;
+  color: #212121;
+  margin-bottom: 20px;
+}
+
+.badFoodsList {
+  padding-left: 0;
+  list-style-position: inside;
+  margin: 0;
+}
+
+.badFoodsList li {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #9b9faa;
+  margin-bottom: 10px;
+}
+
+.modalActionButton {
+  background-color: #fc842d;
+  box-shadow: 0px 4px 10px rgba(252, 132, 45, 0.5);
+  border-radius: 30px;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 13px 50px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+
+.modalActionButton:hover {
+  transform: scale(1.05);
+}
+
+/* --- MOBİL VE TABLET UYUMLULUĞU (RESPONSIVE) --- */
+
+@media screen and (max-width: 1024px) {
+  .pageWrapper {
+    flex-direction: column;
+  }
+  .leftSide {
+    width: 100%;
+    padding: 30px 20px;
+  }
+  .rightSide {
+    width: 100%;
+    min-height: 400px;
+    background-size: 40%, 40%, 70%, cover;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .leftSide {
+    padding: 20px 15px;
+  }
+  .rightSide {
+    min-height: 250px;
+  }
+
+  .modalContent {
+    width: 90%;
+    height: auto;
+    padding: 40px 20px;
+  }
+  .modalTitle {
+    font-size: 20px;
+  }
+  .calorieNumber {
+    font-size: 36px;
+  }
+  .modalDivider,
+  .badFoodsSection {
+    width: 100%;
+  }
 }

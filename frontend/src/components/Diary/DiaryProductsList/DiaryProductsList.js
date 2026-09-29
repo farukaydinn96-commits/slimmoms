@@ -1,82 +1,41 @@
-import { useEffect, useRef, useState } from 'react';
-import DiaryProductsListItem from '../DiaryProductsListItem/DiaryProductsListItem';
+import React from 'react';
 import styles from './DiaryProductsList.module.css';
 
 const DiaryProductsList = ({ products, onDelete }) => {
-  const containerRef = useRef(null);
-  const listRef = useRef(null);
-  const [thumbHeight, setThumbHeight] = useState(0);
-  const [thumbTop, setThumbTop] = useState(0);
-
-  useEffect(() => {
-    const updateScrollbar = () => {
-      const container = containerRef.current;
-      const list = listRef.current;
-
-      if (!container || !list) {
-        return;
-      }
-
-      const containerHeight = container.clientHeight;
-      const contentHeight = list.scrollHeight;
-
-      if (contentHeight <= containerHeight) {
-        setThumbHeight(containerHeight);
-        setThumbTop(0);
-        return;
-      }
-
-      const height = Math.max(
-        24,
-        (containerHeight / contentHeight) * containerHeight
-      );
-
-      setThumbHeight(height);
-      setThumbTop(
-        (container.scrollTop / (contentHeight - containerHeight)) *
-          (containerHeight - height)
-      );
-    };
-
-    updateScrollbar();
-
-    const container = containerRef.current;
-
-    if (!container) {
-      return;
-    }
-
-    container.addEventListener('scroll', updateScrollbar);
-    window.addEventListener('resize', updateScrollbar);
-
-    return () => {
-      container.removeEventListener('scroll', updateScrollbar);
-      window.removeEventListener('resize', updateScrollbar);
-    };
-  }, [products]);
-
   return (
-    <div className={styles.wrapper}>
-      <div ref={containerRef} className={styles.scrollContainer}>
-        <ul ref={listRef} className={styles.list}>
-          {products.map(product => (
-            <DiaryProductsListItem
-              key={product.id}
-              product={product}
-              onDelete={onDelete}
-            />
-          ))}
-        </ul>
-      </div>
+    <div
+      className={`${styles.wrapper} ${products?.length > 4 ? styles.isScrollable : ''}`}
+    >
+      <div className={styles.scrollContainer}>
+        {products && products.length > 0 ? (
+          <ul className={styles.list}>
+            {products.map(product => (
+              <li key={product.id} className={styles.listItem}>
+                <span className={styles.name}>{product.title}</span>
 
-      <div className={styles.scrollbar}>
-        <div
-          className={styles.scrollThumb}
-          style={{
-            height: `${thumbHeight}px`,
-            transform: `translateY(${thumbTop}px)`,
-          }}
-        />
+                <span className={styles.weight}>{product.weight} g</span>
+
+                <span className={styles.kcal}>
+                  {Math.round(product.kcal)} kcal
+                </span>
+
+                <button
+                  type="button"
+                  className={styles.deleteButton}
+                  onClick={() => onDelete(product.id)}
+                  aria-label="Ürünü Sil"
+                  title="Ürünü Sil"
+                >
+                  ✕
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className={styles.emptyList}>
+            Bugün için henüz bir ürün eklemediniz.
+          </p>
+        )}
       </div>
     </div>
   );

@@ -1,46 +1,52 @@
-const calculatorService = require('../services/calculatorService');
-
 const calculateCalories = async (req, res, next) => {
   try {
-    const { height, desiredWeight, age, bloodType, currentWeight } = req.body;
+    const { height, age, currentWeight, desiredWeight, bloodType } = req.body;
 
-    const result = calculatorService.calculateCalories({
-      height,
-      desiredWeight,
-      age,
-      bloodType,
-      currentWeight,
-    });
+    if (!height || !age || !currentWeight || !desiredWeight || !bloodType) {
+      return res
+        .status(400)
+        .json({ message: 'Lütfen tüm alanları eksiksiz doldurun.' });
+    }
 
-    const notRecommendedFoods =
-      await calculatorService.getNotRecommendedFoods(bloodType);
+    const dailyRate = Math.round(
+      10 * currentWeight +
+        6.25 * height -
+        5 * age -
+        161 -
+        10 * (currentWeight - desiredWeight)
+    );
 
-    res.status(200).json({
-      dailyRate: result.dailyRate,
-      notRecommendedFoods,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+    let notRecommendedFoods = [];
 
-const calculateCaloriesPrivate = async (req, res, next) => {
-  try {
-    const { height, desiredWeight, age, bloodType, currentWeight } = req.body;
+    switch (Number(bloodType)) {
+      case 1:
+        notRecommendedFoods = [
+          'Flour products',
+          'Milk',
+          'Red meat',
+          'Smoked meats',
+        ];
+        break;
+      case 2:
+        notRecommendedFoods = [
+          'Red meat',
+          'Dairy products',
+          'Potatoes',
+          'Tomatoes',
+        ];
+        break;
+      case 3:
+        notRecommendedFoods = ['Chicken', 'Pork', 'Wheat', 'Corn'];
+        break;
+      case 4:
+        notRecommendedFoods = ['Red meat', 'Buckwheat', 'Corn', 'Kidney beans'];
+        break;
+      default:
+        notRecommendedFoods = ['Flour products', 'Milk', 'Sweets'];
+    }
 
-    const result = calculatorService.calculateCalories({
-      height,
-      desiredWeight,
-      age,
-      bloodType,
-      currentWeight,
-    });
-
-    const notRecommendedFoods =
-      await calculatorService.getNotRecommendedFoods(bloodType);
-
-    res.status(200).json({
-      dailyRate: result.dailyRate,
+    return res.status(200).json({
+      dailyRate,
       notRecommendedFoods,
     });
   } catch (error) {
@@ -50,5 +56,4 @@ const calculateCaloriesPrivate = async (req, res, next) => {
 
 module.exports = {
   calculateCalories,
-  calculateCaloriesPrivate,
 };

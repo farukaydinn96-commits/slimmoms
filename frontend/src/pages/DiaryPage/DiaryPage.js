@@ -9,8 +9,11 @@ import {
   fetchDiaryByDate,
   setSelectedDate,
 } from '../../redux/diarySlice';
+
+// Arka plan yaprak resimleri
 import diarySummaryDesktopBg from './diarysummarydesktopbg.png';
 import diarySummaryTabletBg from './diarysummarytabletbg.png';
+
 import styles from './DiaryPage.module.css';
 
 const DiaryPage = () => {
@@ -29,7 +32,6 @@ const DiaryPage = () => {
 
   const handleDateChange = date => {
     const formattedDate = date.toISOString().split('T')[0];
-
     dispatch(setSelectedDate(formattedDate));
     setSelectedProduct(null);
   };
@@ -39,40 +41,49 @@ const DiaryPage = () => {
   };
 
   const handleAdd = async product => {
-    await dispatch(
-      addDiaryProductThunk({
-        date: selectedDate,
-        productId: product.productId,
-        weight: product.weight,
-      })
-    ).unwrap();
+    try {
+      await dispatch(
+        addDiaryProductThunk({
+          date: selectedDate,
+          // KRİTİK DÜZELTME: Backend'e giden ID'nin boş (undefined) olmasını engellemek
+          // için MongoDB (_id) ve Frontend (id/productId) varyasyonlarının hepsini ekledik.
+          productId: product._id || product.id || product.productId,
+          weight: product.weight,
+        })
+      ).unwrap();
 
-    await dispatch(fetchDiaryByDate(selectedDate)).unwrap();
-
-    setSelectedProduct(null);
-    setIsAddModalOpen(false);
+      await dispatch(fetchDiaryByDate(selectedDate)).unwrap();
+      setSelectedProduct(null);
+      setIsAddModalOpen(false);
+    } catch (error) {
+      console.error('Ürün eklenirken hata oluştu:', error);
+    }
   };
 
   const handleDelete = async id => {
-    await dispatch(deleteDiaryProductThunk(id)).unwrap();
-
-    dispatch(fetchDiaryByDate(selectedDate));
+    try {
+      await dispatch(deleteDiaryProductThunk(id)).unwrap();
+      dispatch(fetchDiaryByDate(selectedDate));
+    } catch (error) {
+      console.error('Ürün silinirken hata oluştu:', error);
+    }
   };
 
   const formattedDate = selectedDate.split('-').reverse().join('.');
 
   return (
-    <main className={styles.diaryPage}>
+    <main className={styles.diaryPageLayout}>
+      {/* SOL TARAF: GÜNLÜK İÇERİĞİ VE FORM */}
       <section className={styles.diaryContent}>
         <div className={styles.dateSection}>
-          <h1>{formattedDate}</h1>
-
+          <h1 className={styles.dateTitle}>{formattedDate}</h1>
           <DiaryDateCalendar
             selectedDate={new Date(selectedDate)}
             onDateChange={handleDateChange}
           />
         </div>
 
+        {/* Sadece Tablet ve Desktop'ta görünür */}
         <div className={styles.desktopAddForm}>
           <DiaryAddProductForm
             onAdd={handleAdd}
@@ -81,8 +92,10 @@ const DiaryPage = () => {
           />
         </div>
 
+        {/* Tüketilen Ürünler Listesi */}
         <DiaryProductsList products={eatenProducts} onDelete={handleDelete} />
 
+        {/* Sadece Mobil'de görünen yuvarlak + butonu */}
         <button
           className={styles.mobileAddButton}
           type="button"
@@ -93,14 +106,15 @@ const DiaryPage = () => {
         </button>
       </section>
 
+      {/* SAĞ / ALT TARAF: ÖZET PANELİ */}
       <aside className={styles.summary}>
+        {/* Yaprak Arka Planları */}
         <img
           className={`${styles.summaryBackground} ${styles.summaryDesktopBackground}`}
           src={diarySummaryDesktopBg}
           alt=""
           aria-hidden="true"
         />
-
         <img
           className={`${styles.summaryBackground} ${styles.summaryTabletBackground}`}
           src={diarySummaryTabletBg}
@@ -111,27 +125,23 @@ const DiaryPage = () => {
         <div className={styles.summaryContent}>
           <section className={styles.summarySection}>
             <h2>Summary for {formattedDate}</h2>
-
             <div className={styles.summaryList}>
               <div className={styles.summaryRow}>
                 <span>Left</span>
-                <span>{daySummary.kcalLeft} kcal</span>
+                <span>{daySummary?.kcalLeft || 0} kcal</span>
               </div>
-
               <div className={styles.summaryRow}>
                 <span>Consumed</span>
-                <span>{daySummary.kcalConsumed} kcal</span>
+                <span>{daySummary?.kcalConsumed || 0} kcal</span>
               </div>
-
               <div className={styles.summaryRow}>
                 <span>Daily rate</span>
-                <span>{daySummary.dailyRate} kcal</span>
+                <span>{daySummary?.dailyRate || 0} kcal</span>
               </div>
-
               <div className={styles.summaryRow}>
                 <span>n% of normal</span>
                 <span>
-                  {daySummary.dailyRate
+                  {daySummary?.dailyRate
                     ? Math.round(
                         (daySummary.kcalConsumed / daySummary.dailyRate) * 100
                       )
@@ -144,7 +154,6 @@ const DiaryPage = () => {
 
           <section className={styles.summarySection}>
             <h2>Food not recommended</h2>
-
             <ul className={styles.recommendedList}>
               <li>Flour products</li>
               <li>Milk</li>
@@ -155,6 +164,7 @@ const DiaryPage = () => {
         </div>
       </aside>
 
+      {/* MOBİL İÇİN ÜRÜN EKLEME MODALI */}
       {isAddModalOpen && (
         <div className={styles.addModal}>
           <div className={styles.addModalContent}>
@@ -166,7 +176,6 @@ const DiaryPage = () => {
             >
               ←
             </button>
-
             <DiaryAddProductForm
               onAdd={handleAdd}
               selectedProduct={selectedProduct}
