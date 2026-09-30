@@ -3,7 +3,9 @@ import logger from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
 
+import swaggerSpec from './swagger.js';
 import authRouter from './routes/api/auth.js';
 import productsRouter from './routes/api/products.js';
 import dailyNutritionsRouter from './routes/api/dailyNutritions.js';
@@ -47,6 +49,8 @@ app.set('trust proxy', 1);
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/health', (_req, res) => res.json({ ok: true }));
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/users', authRouter);
 app.use('/api/products', productsRouter);
