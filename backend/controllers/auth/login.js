@@ -1,18 +1,22 @@
-import bcrypt from "bcryptjs";
-import { User } from "../../models/index.js";
-import { RequestError, createTokens } from "../../helpers/index.js";
+import bcrypt from 'bcryptjs';
+
+import { User } from '../../models/index.js';
+
+import { RequestError, createTokens } from '../../helpers/index.js';
 
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
+
   if (!user) {
-    throw RequestError(401, "Current email is not registered");
+    throw RequestError(401, 'Current email is not registered');
   }
 
   const passwordCompare = await bcrypt.compare(password, user.password);
+
   if (!passwordCompare) {
-    throw RequestError(401, "Email or password is wrong");
+    throw RequestError(401, 'Email or password is wrong');
   }
 
   const { accessToken, refreshToken } = await createTokens(user._id);
@@ -22,18 +26,20 @@ const login = async (req, res) => {
     refreshToken,
   });
 
+  const sameSite = process.env.NODE_ENV === 'production' ? 'none' : 'strict';
+  const secure = process.env.NODE_ENV === 'production';
 
   res
-    .cookie("accessToken", accessToken, {
+    .cookie('accessToken', accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
-      maxAge: 15 * 60 * 1000, 
+      secure,
+      sameSite,
+      maxAge: 15 * 60 * 1000,
     })
-    .cookie("refreshToken", refreshToken, {
+    .cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure,
+      sameSite,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
     .status(200)
