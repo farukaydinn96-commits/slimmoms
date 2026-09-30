@@ -34,12 +34,14 @@ const login = async (req, res) => {
       httpOnly: true,
       secure,
       sameSite,
+      partitioned: secure,
       maxAge: 15 * 60 * 1000,
     })
     .cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure,
       sameSite,
+      partitioned: secure,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
     .status(200)
