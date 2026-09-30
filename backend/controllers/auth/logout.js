@@ -1,28 +1,28 @@
-import { User } from "../../models/index.js";
+import { Session } from '../../models/index.js';
 
 const logout = async (req, res) => {
   const { _id } = req.user;
 
+  await Session.deleteMany({ userId: _id });
 
-  await User.findByIdAndUpdate(_id, {
-    accessToken: "",
-    refreshToken: "",
-  });
-
+  const sameSite = process.env.NODE_ENV === 'production' ? 'none' : 'strict';
+  const secure = process.env.NODE_ENV === 'production';
 
   res
-    .clearCookie("accessToken", {
+    .clearCookie('accessToken', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure,
+      sameSite,
+      path: '/',
     })
-    .clearCookie("refreshToken", {
+    .clearCookie('refreshToken', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure,
+      sameSite,
+      path: '/',
     })
     .status(200)
-    .json({ message: "Logout success" });
+    .json({ message: 'Logout success' });
 };
 
 export default logout;
