@@ -4,17 +4,20 @@ const findProductsByQuery = async (req, res) => {
   const { q } = req.query;
 
   if (!q) {
-    return res.status(400).json({ message: "Query parameter 'q' is required" });
+    return res.status(400).json({
+      message: "Query parameter 'q' is required",
+    });
   }
 
   const result = await Product.find(
     {
-      $or: [
-        { 'title.ru': { $regex: q, $options: 'i' } },
-        { 'title.ua': { $regex: q, $options: 'i' } },
-      ],
+      title: { $regex: q, $options: 'i' },
     },
-    { title: 1, weight: 1, calories: 1 }
+    {
+      title: 1,
+      weight: 1,
+      calories: 1,
+    }
   ).limit(20);
 
   return res.status(200).json(result);
