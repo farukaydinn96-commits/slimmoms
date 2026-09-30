@@ -1,7 +1,7 @@
 import { Product, User } from '../../models/index.js';
 import { RequestError } from '../../helpers/index.js';
 
-const dailyIntakeControllerForUser = async (req, res, next) => {
+const dailyIntakeControllerForUser = async (req, res, _next) => {
   const { age, height, currentWeight, desiredWeight, bloodType } = req.body;
   const { _id: id } = req.user;
 

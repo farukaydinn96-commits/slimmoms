@@ -22,9 +22,11 @@
   padding: 15px 18px 15px 0;
   color: white;
 }
+
 .link:hover {
   color: var(--second-color);
 }
+
 .activeLink {
   display: inline-block;
   text-decoration: none;
@@ -35,6 +37,6 @@
 }
 
 .nav {
-  padding-top: 60px;
+  padding-top: 30px;
   text-align: center;
 }

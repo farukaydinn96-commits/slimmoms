@@ -1,7 +1,7 @@
 import { Product } from '../../models/index.js';
 import { RequestError } from '../../helpers/index.js';
 
-const dailyIntakeController = async (req, res, next) => {
+const dailyIntakeController = async (req, res, _next) => {
   const { age, height, currentWeight, desiredWeight, bloodType } = req.body;
 
   const dailyCaloriesCalculate = Math.round(

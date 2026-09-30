@@ -1,6 +1,6 @@
-import bcrypt from "bcryptjs";
-import { User } from "../../models/index.js";
-import { RequestError, createTokens } from "../../helpers/index.js";
+import bcrypt from 'bcryptjs';
+import { User } from '../../models/index.js';
+import { RequestError, createTokens } from '../../helpers/index.js';
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -8,7 +8,7 @@ const register = async (req, res) => {
   const existingUser = await User.findOne({ email });
 
   if (existingUser && existingUser.verify) {
-    throw RequestError(409, "Email in use");
+    throw RequestError(409, 'Email in use');
   }
 
   if (existingUser && !existingUser.verify) {
@@ -27,17 +27,22 @@ const register = async (req, res) => {
 
   const { accessToken, refreshToken } = await createTokens(newUser._id);
 
+  const sameSite = process.env.NODE_ENV === 'production' ? 'none' : 'strict';
+  const secure = process.env.NODE_ENV === 'production';
+
   res
-    .cookie("accessToken", accessToken, {
+    .cookie('accessToken', accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure,
+      sameSite,
+      partitioned: secure,
       maxAge: 15 * 60 * 1000,
     })
-    .cookie("refreshToken", refreshToken, {
+    .cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure,
+      sameSite,
+      partitioned: secure,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
     .status(201)

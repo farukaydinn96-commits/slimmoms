@@ -1,7 +1,5 @@
 import bcrypt from 'bcryptjs';
-
 import { User } from '../../models/index.js';
-
 import { RequestError, createTokens } from '../../helpers/index.js';
 
 const login = async (req, res) => {
@@ -20,11 +18,6 @@ const login = async (req, res) => {
   }
 
   const { accessToken, refreshToken } = await createTokens(user._id);
-
-  await User.findByIdAndUpdate(user._id, {
-    accessToken,
-    refreshToken,
-  });
 
   const sameSite = process.env.NODE_ENV === 'production' ? 'none' : 'strict';
   const secure = process.env.NODE_ENV === 'production';
